@@ -39,19 +39,16 @@ function splitBySentences(text) {
         current += text[j];
         j++;
       }
-      // Update i to skip the consecutive punctuation we just added
+      // Update i to skip the newly added consecutive punctuation
       i = j - 1;
-      // Look ahead for whitespace after all the punctuation
-      if (j < text.length && /\s/.test(text[j])) {
-        sentences.push(current);
-        current = '';
-      } else if (j === text.length) {
-        // End of text
+      // Check if whitespace follows punctuation or we're at end of text
+      if ((j < text.length && /\s/.test(text[j])) || j === text.length) {
         sentences.push(current);
         current = '';
       }
     }
   }
+  // Handle remaining text that didn't end with sentence punctuation
   if (current.trim()) {
     sentences.push(current);
   }
